@@ -14,7 +14,7 @@
     ids = ids.split(',')
     for await (const ID of ids) {
       //await autoPost(ID)
-      await  $notification.post('Đang chạy vào ID:', ID, 'Digest:', `$persistentStore.read('session_digest')`)
+      await  $notification.post('Đang chạy vào ID:', ID, 'Digest:', $persistentStore.read('session_digest'))
     }
 
     sendMessageToTelegram(`session_digest: ${session_digest}`);
