@@ -1,7 +1,7 @@
-#!name = 自动加入TestFlight
-#!desc = 自动监控TestFlight名额，一旦有新的名额即刻加入。
+#!name = Tự động tham gia TestFlight
+#!desc = Tự động theo dõi hạn ngạch TestFlight và thêm hạn ngạch mới ngay khi có sẵn.
 #!openUrl = 
-#!author = DecoAri xream
+#!author = QThang net
 #!homepage = https://gitlab.com/lodepuly/vpn_tool/-/tree/master/Tool/Loon/Plugin
 #!icon = https://gitlab.com/lodepuly/iconlibrary/-/raw/main/App_icon/120px/TestFlight.png
 #!input = APP_ID
