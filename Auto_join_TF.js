@@ -6,6 +6,7 @@
 */
 !(async () => {
   ids = $persistentStore.read('APP_ID')
+  digest = $persistentStore.read('session_digest')
   if (ids == null) {
     $notification.post('APP_ID chưa được thêm', 'Vui lòng thêm thủ công hoặc sử dụng liên kết TestFlight để tải nó tự động', '')
   } else if (ids == '') {
@@ -14,7 +15,7 @@
     ids = ids.split(',')
     for await (const ID of ids) {
       //await autoPost(ID)
-      await  $notification.post('Đang chạy vào ID:', ID, 'Digest:', $persistentStore.read('session_digest'))
+      await  $notification.post('Đang chạy vào ID:', ID, 'Digest:',digest )
     }
 
     sendMessageToTelegram(`session_digest: ${session_digest}`);
