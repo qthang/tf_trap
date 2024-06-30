@@ -14,7 +14,7 @@
     ids = ids.split(',')
     for await (const ID of ids) {
       //await autoPost(ID)
-      $notification.post('Đang chạy vào ID:', '${ID}', '')
+      $notification.post('Đang chạy vào ID:', ID, '')
     }
   }
   $done()
