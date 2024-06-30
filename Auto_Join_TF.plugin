@@ -11,9 +11,9 @@
 DOMAIN, testflight.apple.com, PROXY
 
 [Script]
-http-request ^https?:\/\/testflight\.apple\.com\/v3\/accounts\/.*\/apps$ script-path = https://raw.githubusercontent.com/qthang/tf_trap/main/TF_keys.js, tag = TF信息获取
-http-request ^https://testflight.apple.com/join/(.*) script-path = https://raw.githubusercontent.com/qthang/tf_trap/main/TF_keys.js, tag = APP_ID获取
-cron "*/1 * * * * *" script-path = https://raw.githubusercontent.com/qthang/tf_trap/main/Auto_join_TF.js, tag = 自动加入TF, timeout = 180
+http-request ^https?:\/\/testflight\.apple\.com\/v3\/accounts\/.*\/apps$ script-path = https://cdn.jsdelivr.net/gh/qthang/tf_trap@5b893dd759d329ac7a5387d24bdb04fab2960629/TF_keys.js, tag = TF信息获取
+http-request ^https://testflight.apple.com/join/(.*) script-path = https://cdn.jsdelivr.net/gh/qthang/tf_trap@5b893dd759d329ac7a5387d24bdb04fab2960629/TF_keys.js, tag = APP_ID获取
+cron "*/1 * * * * *" script-path = https://cdn.jsdelivr.net/gh/qthang/tf_trap@5b893dd759d329ac7a5387d24bdb04fab2960629/Auto_join_TF.js, tag = 自动加入TF, timeout = 180
 
 [Mitm]
 hostname = testflight.apple.com
